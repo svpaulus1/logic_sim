@@ -30,7 +30,8 @@ class Net; // Forward declaration
 class Component
 {
 protected:
-    std::string name_; ///< The unique identifier for this component instance.
+    uint64_t id_; ///< Unique internal identifier.
+    std::string name_; ///< Human-readable identifier.
     uint64_t delay_; ///< The propagation delay of the component.
 
     /// Collection of incoming connections driving this component.
@@ -38,6 +39,7 @@ protected:
     /// Collection of outgoing connections driven by this component.
     std::vector<std::shared_ptr<Net>> outputs_;
 
+public:
     /**
      * @brief Computes the logic state of the component based on its inputs.
      *
@@ -55,6 +57,13 @@ protected:
      * destroyed through a base class pointer.
      */
     virtual ~Component() = default;
+
+    /**
+     * @brief ID Getter.
+     *
+     * Returns the numeric id of the component.
+     */
+    uint64_t getId() const { return id_; }
 };
 
 #endif
