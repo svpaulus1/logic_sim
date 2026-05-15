@@ -15,7 +15,6 @@
 
 #include <vector>
 #include <string>
-#include <memory>
 
 class Net; // Forward declaration
 
@@ -30,14 +29,14 @@ class Net; // Forward declaration
 class Component
 {
 protected:
-    uint64_t id_; ///< Unique internal identifier.
+    uint64_t id_;      ///< Unique internal identifier.
     std::string name_; ///< Human-readable identifier.
-    uint64_t delay_; ///< The propagation delay of the component.
+    uint64_t delay_;   ///< The propagation delay of the component.
 
     /// Collection of incoming connections driving this component.
-    std::vector<std::shared_ptr<Net>> inputs_;
+    std::vector<Net*> inputs_;
     /// Collection of outgoing connections driven by this component.
-    std::vector<std::shared_ptr<Net>> outputs_;
+    std::vector<Net*> outputs_;
 
 public:
     /**
@@ -58,12 +57,22 @@ public:
      */
     virtual ~Component() = default;
 
-    /**
-     * @brief ID Getter.
-     *
-     * Returns the numeric id of the component.
-     */
+    // --- Getters ---
+
+    /** @return The unique identifier of this component. */
     uint64_t getId() const { return id_; }
+
+    /** @return The name of this component. */
+    std::string getName() const { return name_; }
+
+    /** @return The propagation delay of this component. */
+    uint64_t getPropDelay() const { return prop_delay_; }
+
+    /** @return A vector of Net inputs of this component. */
+    std::vector<Net*> getInputs() const { return inputs_; }
+
+    /** @return A vector of Net outputs of this component. */
+    std::vector<Net*> getOutputs() const { return outputs_; }
 };
 
 #endif
