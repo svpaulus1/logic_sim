@@ -9,7 +9,6 @@
  * @date   2026-5-15
  */
 
-
 #ifndef LOGICVALUE_H
 #define LOGICVALUE_H
 
