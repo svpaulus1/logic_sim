@@ -15,7 +15,8 @@
 #define EVENT_H
 
 #include <vector>
-#include <memory>
+#include <queue> 
+#include <functional> 
 
 #include "LogicValue.h"
 
@@ -32,23 +33,20 @@ class Net; // Forward declaration
 class Event
 {
 private:
-    /// The exact simulation time this event occurs.
-    uint64_t timestamp_;
-    /// The wire/connection that will receive the new logic value.
-    std::shared_ptr<Net> target_;
-    /// The logic state the target net will transition to.
-    LogicValue value_;
+    uint64_t timestamp_;     ///< The exact simulation time this event occurs.
+    Net* target_; ///< The wire/connection to receive the new logic value.
+    LogicValue value_; ///< The logic state the target net will transition to.
 
 public:
     /**
      * @brief Constructs a new simulation Event.
      * 
      * @param time  The future timestamp when this event should execute.
-     * @param net   The target Net to update.
+     * @param net   Pointer to the target Net to update.
      * @param val   The new LogicValue to apply to the net.
      */
-    Event(uint64_t time, std::shared_ptr<Net> net, LogicValue val)
-        : timestamp_(time), target_(std::move(net)), value_(val) 
+    Event(uint64_t time, Net* net, LogicValue val)
+        : timestamp_(time), target_(net), value_(val) 
     {}
 
     // --- Getters ---
@@ -56,8 +54,8 @@ public:
     /** @return The timestamp of when this event executes. */
     uint64_t getTimestamp() const { return timestamp_; }
 
-    /** @return A pointer to the net being modified. */
-    std::shared_ptr<Net> getTarget() const { return target_; }
+    /** @return A raw pointer to the net being modified. */
+    Net* getTarget() const { return target_; }
 
     /** @return The logic value to apply. */
     LogicValue getValue() const { return value_; }
@@ -71,8 +69,8 @@ public:
      * ensure that the queue acts as a Min-Heap. Events with the smallest 
      * (earliest) timestamp will bubble to the top of the queue.
      *
-     * @param other  The event to compare against.
-     * @return True  if this event occurs strictly after the other event.
+     * @param other The event to compare against.
+     * @return True if this event occurs strictly after the other event.
      */
     bool operator>(const Event& other) const
     {
