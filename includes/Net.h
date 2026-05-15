@@ -32,13 +32,76 @@ class Net
 private:
     /// A unique identifier for this net instance.
     uint64_t id_;
+    
     /// The current simulated electrical state of the wire.
-    LogicValue current_value_ = LogicValue::UNKNOWN;
+    LogicValue value_ = LogicValue::UNKNOWN;
 
     /// Pointer to the component output that determines the state of this net.
-    Component* driver_ = nullptr; 
+    Component* driver_ = nullptr;
+    
     /// Collection of component inputs that react to changes on this net.
     std::vector<Component*> consumers_;
+
+public:
+    /**
+     * @brief Constructs a new Net with fully initialized connections.
+     * 
+     * @param id        The unique identifier for this net.
+     * @param val       The initial logic state of the wire (usually UNKNOWN).
+     * @param driver    Pointer to the component output driving this net.
+     * @param consumers Collection of component inputs reading from this net.
+     */
+    Net(uint64_t id,
+        LogicValue val,
+        Component* driver,
+        std::vector<Component*> consumers)
+        : id_(id),
+          value_(val),
+          driver_(driver),
+          consumers_(consumers)
+    {}
+
+    // --- Getters ---
+
+    /** @return The unique identifier of this net. */
+    uint64_t getId() const { return id_; }
+    
+    /** @return The current simulated electrical state of the net. */
+    LogicValue getValue() const { return value_; }
+    
+    /** @return Pointer to the component driving this signal. */
+    Component* getDriver() const { return driver_; }
+    
+    /** @return A copy of the vector with all components reading this signal. */
+    std::vector<Component*> getConsumers() const { return consumers_; }
+
+    // --- Setters ---
+
+    /**
+     * @brief Updates the unique identifier.
+     * @param id The new ID to assign.
+     */
+    void setId(uint64_t id) { id_ = id; }
+    
+    /**
+     * @brief Directly sets the logic value of the net.
+     * @note  In an event-driven simulation, prefer updating values via scheduled 
+     *        Events rather than calling this directly to prevent timing issues.
+     * @param val The new logic state.
+     */
+    void setValue(LogicValue val) { value_ = val; }
+    
+    /**
+     * @brief Sets the source component driving this net.
+     * @param d Pointer to the driving component.
+     */
+    void setDriver(Component* d) { driver_ = d; }
+    
+    /**
+     * @brief Overwrites the list of components reading this net.
+     * @param c The new collection of consumer components.
+     */
+    void setConsumers(std::vector<Component*> c) { consumers_ = c; }
 };
 
 #endif
