@@ -18,6 +18,7 @@
 #include "LogicValue.h"
 
 class Component; // Forward declaration.
+class Circuit;   // Forward declaration.
 
 /**
  * @brief Represents an electrical connection between hardware components.
@@ -29,6 +30,8 @@ class Component; // Forward declaration.
  */
 class Net
 {
+    friend class Circuit;
+    
 private:
     /// A unique identifier for this net instance.
     uint64_t id_;
@@ -41,6 +44,15 @@ private:
     
     /// Collection of component inputs that react to changes on this net.
     std::vector<Component*> consumers_;
+
+
+    /**
+     * @brief Directly sets the logic value of the net.
+     * @note  This is private to prevent gates from instantly changing wires.
+     * Only the Circuit class (via the friend declaration) can call this 
+     * during the event loop.
+     */
+    void setValue(LogicValue val) { value_ = val; }
 
 public:
     /**

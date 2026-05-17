@@ -16,6 +16,8 @@
 #include <vector>
 #include <string>
 
+#include "Types.h"
+
 class Net; // Forward declaration
 
 /**
@@ -45,14 +47,14 @@ public:
      * This pure virtual method must be overridden by derived classes. 
      * It reads the current logic values from the inputs_, applies the 
      * component's specific Boolean logic (e.g., AND, OR, NOT), and schedules 
-     * updates to the outputs_ factoring in the prop_delay_.
+     * updates to the outputs_ factoring in the delay_.
      */
-    virtual void evaluate() = 0;
+    virtual void evaluate(EventQueue queue,
+                          uint64_t current_time) = 0;
 
     /**
      * @brief Virtual destructor.
-     * 
-     * Ensures proper cleanup of derived component classes when they are 
+     * * Ensures proper cleanup of derived component classes when they are 
      * destroyed through a base class pointer.
      */
     virtual ~Component() = default;
@@ -66,7 +68,7 @@ public:
     std::string getName() const { return name_; }
 
     /** @return The propagation delay of this component. */
-    uint64_t getPropDelay() const { return prop_delay_; }
+    uint64_t getDelay() const { return delay_; }
 
     /** @return A vector of Net inputs of this component. */
     std::vector<Net*> getInputs() const { return inputs_; }
@@ -77,19 +79,19 @@ public:
     // --- Setters ---
 
     /** @brief Set a new name for the component.
-     *  @param name New string value to set name_ to.
+     * @param name New string value to set name_ to (Passed by const reference).
      */
-    void setName(std::string name) { name_ = name; }
+    void setName(const std::string& name) { name_ = name; }
 
     /** @brief Set a new vector of Nets as inputs.
      *  @param inputs A vector of Nets to be set as the new input_ vector.
      */
-    void setInputs(std::vector<Net*> inputs) { inputs_ = inputs; }
+    void setInputs(const std::vector<Net*>& inputs) { inputs_ = inputs; }
 
     /** @brief Set a new vector of Nets as outputs.
      *  @param outputs A vector of Nets to be set as the new output_ vector.
      */
-    void setOutputs(std::vector<Net*> outputs) { outputs_ = outputs; }
+    void setOutputs(const std::vector<Net*>& outputs) { outputs_ = outputs; }
 
     /** @brief Add one input to the inputs_ vector.
      *  @param input A pointer to a Net object to be added to inputs_.
