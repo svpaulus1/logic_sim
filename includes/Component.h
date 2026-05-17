@@ -73,6 +73,33 @@ public:
 
     /** @return A vector of Net outputs of this component. */
     std::vector<Net*> getOutputs() const { return outputs_; }
+
+    // --- Setters ---
+
+    /** @brief Set a new name for the component.
+     *  @param name New string value to set name_ to.
+     */
+    void setName(std::string name) { name_ = name; }
+
+    /** @brief Set a new vector of Nets as inputs.
+     *  @param inputs A vector of Nets to be set as the new input_ vector.
+     */
+    void setInputs(std::vector<Net*> inputs) { inputs_ = inputs; }
+
+    /** @brief Set a new vector of Nets as outputs.
+     *  @param outputs A vector of Nets to be set as the new output_ vector.
+     */
+    void setOutputs(std::vector<Net*> outputs) { outputs_ = outputs; }
+
+    /** @brief Add one input to the inputs_ vector.
+     *  @param input A pointer to a Net object to be added to inputs_.
+     */
+    void addInput(Net* input) { inputs_.push_back(input); }
+
+    /** @brief Add one output to the outputs_ vector.
+     *  @param output A pointer to a Net object to be added to outputs_.
+     */
+    void addOutput(Net* output) { outputs_.push_back(output); }
 };
 
 #endif

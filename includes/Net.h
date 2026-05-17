@@ -76,20 +76,6 @@ public:
     std::vector<Component*> getConsumers() const { return consumers_; }
 
     // --- Setters ---
-
-    /**
-     * @brief Updates the unique identifier.
-     * @param id The new ID to assign.
-     */
-    void setId(uint64_t id) { id_ = id; }
-    
-    /**
-     * @brief Directly sets the logic value of the net.
-     * @note  In an event-driven simulation, prefer updating values via scheduled 
-     *        Events rather than calling this directly to prevent timing issues.
-     * @param val The new logic state.
-     */
-    void setValue(LogicValue val) { value_ = val; }
     
     /**
      * @brief Sets the source component driving this net.
@@ -102,6 +88,11 @@ public:
      * @param c The new collection of consumer components.
      */
     void setConsumers(std::vector<Component*> c) { consumers_ = c; }
+
+    /** @brief Adds a new component to the consumers_ vector.
+     *  @param c A pointer to a Component object to be added to consumers_.
+     */
+    void addConsumer(Component* c) { consumers_.push_back(c); }
 };
 
 #endif
