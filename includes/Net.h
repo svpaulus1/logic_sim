@@ -15,6 +15,7 @@
 #define NET_H
 
 #include <vector>
+#include <string>
 #include "LogicValue.h"
 
 class Component; // Forward declaration.
@@ -35,6 +36,9 @@ class Net
 private:
     /// A unique identifier for this net instance.
     uint64_t id_;
+
+    /// A human-readable identifier for this net instance.
+    std::string name_;
     
     /// The current simulated electrical state of the wire.
     LogicValue value_ = LogicValue::UNKNOWN;
@@ -64,10 +68,12 @@ public:
      * @param consumers Collection of component inputs reading from this net.
      */
     Net(uint64_t id,
+        std::string name,
         LogicValue val,
         Component* driver,
         std::vector<Component*> consumers)
         : id_(id),
+          name_(name),
           value_(val),
           driver_(driver),
           consumers_(consumers)
@@ -77,6 +83,9 @@ public:
 
     /** @return The unique identifier of this net. */
     uint64_t getId() const { return id_; }
+
+    /** @return The human readable identifier of this net. */
+    std::string getName() const { return name_; }
     
     /** @return The current simulated electrical state of the net. */
     LogicValue getValue() const { return value_; }
