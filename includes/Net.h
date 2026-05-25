@@ -97,6 +97,12 @@ public:
     std::vector<Component*> getConsumers() const { return consumers_; }
 
     // --- Setters ---
+
+    /**
+     * @brief Sets the human readable identifier of this net.
+     * @param name String that name_ is set to.
+     */
+    void setName(std::string name) { name_ = name; }
     
     /**
      * @brief Sets the source component driving this net.
