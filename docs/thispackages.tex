@@ -1,0 +1,78 @@
+%-*-latex-*-
+\usepackage{amssymb}
+\usepackage{soul} %stirkeout util
+\usepackage{graphicx}
+\usepackage{amsthm}   
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath, amssymb}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{tikzpagenodes}
+\usepackage{pythontex}
+\usepackage{listings}
+\usepackage{ocgx} %for spoilers
+\usepackage{tcolorbox} % For definitions
+\usepackage{marginnote} % For better sidenotes
+\usepackage{parskip} 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=pink,
+    filecolor=green,
+    linkcolor=blue,
+    urlcolor=blue
+}
+% 2. Margins setup to allow space for sidenotes
+\geometry{
+    left=2cm,
+    right=5cm, % Extra space on right for notes
+    top=2cm,
+    bottom=2cm,
+    marginparwidth=4cm,
+    marginparsep=0.5cm
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{OCaml}{
+  keywords={let, rec, match, with, type, of, if, then, else, begin, end, val, fun, function, module, struct, sig},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={int, string, float, bool, list},
+  ndkeywordstyle=\color{codepurple}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[n]{(*}{*)},
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]"
+}
+
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=lines
+}
+
+%include later
+%\usepackage{framed}
+
+
+%debugging packages
+%\usepackage{showframe}

@@ -44,11 +44,12 @@ build/
 Build/
 build-*/
 
-# CMake generated files
+# CMake generated files (the build dirs above already cover in-tree builds;
+# no "Makefile" pattern here: on case-insensitive file systems it would also
+# hide the project's own makefile)
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
 install_manifest.txt
 compile_commands.json
 
@@ -67,3 +68,17 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Simulator output
+*.vcd
+
+# LaTeX / docs build artifacts
+__pycache__/
+*.pyc
+*.aux
+*.idx
+*.ilg
+*.ind
+*.pytxcode
+docs/main.pdf
+docs/chaps/code/tex_code/

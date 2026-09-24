@@ -1,0 +1,264 @@
+%% \usepackage[utf8]{inputenc}
+%% \usepackage[T1]{fontenc}
+%% \usepackage{geometry}
+%% \usepackage{xcolor}
+%% \usepackage{amsmath, amssymb}
+%% \usepackage{tikz}
+%% \usepackage{listings} % For code
+%% \usepackage{tcolorbox} % For definitions
+%% \usepackage{marginnote} % For better sidenotes
+
+%% % --- LAYOUT CONFIGURATION ---
+%% % 1. This handles the "Newlines" issue.
+%% % It separates paragraphs by space, not indentation.
+%% % You just need to leave ONE empty line in the .tex file to separate thoughts.
+%% \usepackage[parskip]{parskip} 
+
+%% % 2. Margins setup to allow space for sidenotes
+%% \geometry{
+%%     left=2cm,
+%%     right=5cm, % Extra space on right for notes
+%%     top=2cm,
+%%     bottom=2cm,
+%%     marginparwidth=4cm,
+%%     marginparsep=0.5cm
+%% }
+
+%% % --- OCAML CODE STYLING ---
+%% \definecolor{codegreen}{rgb}{0,0.6,0}
+%% \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+%% \definecolor{codepurple}{rgb}{0.58,0,0.82}
+%% \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%% \lstdefinelanguage{OCaml}{
+%%   keywords={let, rec, match, with, type, of, if, then, else, begin, end, val, fun, function, module, struct, sig},
+%%   keywordstyle=\color{blue}\bfseries,
+%%   ndkeywords={int, string, float, bool, list},
+%%   ndkeywordstyle=\color{codepurple}\bfseries,
+%%   identifierstyle=\color{black},
+%%   sensitive=true,
+%%   comment=[n]{(*}{*)},
+%%   commentstyle=\color{codegreen}\ttfamily,
+%%   stringstyle=\color{red}\ttfamily,
+%%   morestring=[b]"
+%% }
+
+%% \lstset{
+%%     backgroundcolor=\color{backcolour},   
+%%     basicstyle=\ttfamily\small,
+%%     breakatwhitespace=false,         
+%%     breaklines=true,                 
+%%     captionpos=b,                    
+%%     keepspaces=true,                 
+%%     numbers=left,                    
+%%     numbersep=5pt,                  
+%%     showspaces=false,                
+%%     showstringspaces=false,
+%%     showtabs=false,                  
+%%     tabsize=2,
+%%     frame=lines
+%% }
+
+%TEXINPUTS=chaps/code/tex_code//:$TEXINPUTS pdflatex main.tex
+\newcommand{\code}[1]{\texttt{\color{blue}#1}}
+
+% Environment for OCaml blocks
+\lstnewenvironment{ocaml}
+{\lstset{language=OCaml}}
+{}
+
+% --- DEFINITION & CONCEPT BOXES ---
+% Replaces your \lemma command with a nice box
+\newtcolorbox{concept}[1]{
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title=\textbf{DEFINITION: #1},
+  sharp corners=south,
+  boxrule=0.5mm
+}
+
+\newtcolorbox{warning}{
+  colback=red!5!white,
+  colframe=red!75!black,
+  title=\textbf{WATCH OUT!},
+  boxrule=0.5mm
+}
+
+% --- SIDENOTES ---
+% This fixes your TikZ issue. This flows with the text.
+\newcommand{\sidenote}[1]{%
+  \marginnote{\footnotesize \textit{\color{blue!70!black} $\rightarrow$ #1}}%
+}
+
+% --- MATH & UTILS ---
+\newcommand{\vct}[1]{\overrightarrow{#1}}
+\newcommand{\prf}[1]{\noindent\underline{\textsc{Proof:}} #1}
+\newcommand{\mtx}[3]{#1_{#2,#3}}
+
+% proof stuff, fix later, error is "LaTeX Error: No counter '?' defined"
+%% \newtheorem{cor}{Corollary}
+%% \numberwithin{cor}{section}
+
+%% \newtheorem{prop}{Proposition}
+%% \numberwithin{prop}{section}
+
+%% \newtheorem{lem}{Lemma}
+%% \numberwithin{lem}{section}
+
+%% \newtheorem{thm}{Theorem}
+%% \numberwithin{thm}{section}
+
+% --- CUSTOM SECTIONS ---
+% This allows you to type \topic{Recursion}
+%% \newcommand{\topic}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+%% \newcommand{\subtopic}[1]{\subsection*{#1}}
+
+% --- THE "STRICT NEWLINE" ENV ---
+% Use this environment if you want text to break exactly where you hit enter
+% without needing double spaces.
+\newenvironment{stricttext}
+{\par\begingroup\obeylines}
+{\endgroup\par}
+
+%% %-*-latex-*-
+%% %misc
+\newcommand{\dated}[1]{\textbf{\underline{\small{$-->$ #1}}} \normalsize\\}
+
+%% %math cmds
+%% \newcommand{\vct}[1]{\overrightarrow{#1}}
+%% \newcommand{\prf}[1]{\textlg{\underline{\textsc{Proof:}} } #1}
+%% %this is just for declaring a matrix M of size i-by-j, or specifying a point in the matrix
+%% \newcommand{\mtx}[3]{$#1_{#2,#3}$}
+
+%% %font adjuster cmds
+\newcommand{\texttn}[1]{\tiny {#1}\normalsize}
+\newcommand{\textsm}[1]{\small {#1}\normalsize}
+\newcommand{\textlg}[1]{\large {#1}\normalsize}
+\newcommand{\texthg}[1]{\huge {#1}\normalsize}
+\newcommand{\EMPHASIZE}[1]{{\huge \textbf{#1}}}
+\newcommand\redtext[1]{\textcolor{red}{#1}}
+\newcommand\textred[1]{\textcolor{red}{#1}}
+\newcommand\bluetext[1]{\textcolor{blue}{#1}}
+\newcommand\textblue[1]{\textcolor{blue}{#1}}
+\newcommand\whitetext[1]{\textcolor{white}{#1}}
+\newcommand\textwhite[1]{\textcolor{white}{#1}}
+
+\newcounter{spoiler}
+\newenvironment{spoiler}[1]{%
+    \stepcounter{spoiler}%
+    \switchocg{spoiler\thespoiler}{\textbf{\textred{#1}}}%
+    \begin{ocg}{spoiler\thespoiler}{spoiler\thespoiler}{0}%
+}{%
+    \end{ocg}%
+}
+
+%% %orientation and definition cmds
+\newcommand{\lemma}[1]{\underline{\texttt{DEFINITION:}} \textit{#1}\\}
+\newcommand{\newsection}[1]{\newpage\textbf{\hypertarget{#1}}{\texthg{#1}}\\}
+\newcommand{\topic}[1]{%
+  \textbf{\underline{\textlg{\textsc{TOPIC: #1}}}}\\[1ex]
+}
+\newcommand{\subtext}[1]{\textit{\texttn{#1}}}
+\newcommand{\centerthis}[1]{\begin{center}#1\end{center}}
+\newcommand{\exercise}[1]{\textbf{Exercise: \underline{#1 }\\\\ }\textsc{Answer:}\\\\}
+
+%% %verbatim env           
+\lstnewenvironment{console}[1][]
+{\lstset{
+    basicstyle=\ttfamily,
+    backgroundcolor=\color{white},
+    frame=single,
+    framesep=3pt,
+    rulecolor=\color{black},
+    showspaces=false,    
+    showtabs=false,      
+    keepspaces=true,     
+    numbers=none,
+    #1
+}}
+{}
+
+%drawing commands (boxes, basic shapes, formatting etc)
+
+\newcommand\xsidebox[5][1=0cm, 2=0cm, 3=]{
+  % #1 x-shift          -- optional (default: 0cm)
+  % #2 y-shift          -- optional (default: 0cm)
+  % #3 node attributes  -- optional (default: empty)
+  % #4 node name
+  % #5 node text
+  \renewcommand*{\marginfont}{\normalsize}
+  \marginpar{\centering%
+      %\vspace{#1}\hspace{#2} 
+      \begin{tikzpicture}[overlay,remember picture, baseline=(#4.base)]
+        \node[rectangle,
+          draw=red,
+          text width=4cm, minimum width=2cm, line width=0.1cm, inner sep=0.2cm, name=#4, xshift=#1, yshift=#2, #3] (#4) 
+             {
+               \begin{minipage}[t]{4.0cm}
+                 {#5}
+               \end{minipage}
+             };
+        ([xshift=0.5]#4.center)[draw]
+      \end{tikzpicture}
+    \renewcommand*{\marginfont}{\tiny}
+}}
+
+\newcommand*{\DrawArrow}[3][red]{%
+    % #1 = draw options
+    % #2 = left node
+    % #3 = right node
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw [-latex, #1, line width=0.1cm] (#2) to (#3);
+  \end{tikzpicture}%
+}
+\newcommand*{\DrawArrowH}[3][red]{%
+    % #1 = draw options
+    % #2 = left node
+    % #3 = right node
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw [-latex, #1, line width=0.1cm] (#2.west |- #3) -- (#3);
+  \end{tikzpicture}%
+}
+\newcommand*{\DrawArrowVH}[3][red]{%
+    % #1 = draw options
+    % #2 = left node
+    % #3 = right node
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw [-latex, #1, line width=0.1cm] (#2) |- (#3.east);
+  \end{tikzpicture}%
+}
+\newcommand*{\DrawArrowHV}[3][red]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw [-latex, #1, line width=0.1cm] (#2.west) -| (#3);
+  \end{tikzpicture}%
+}
+\newcommand*{\DrawArrowPoints}[4][red]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw [-latex, #1, line width=0.1cm] (#2) #4 to (#3);
+  \end{tikzpicture}%
+}
+
+
+\lstnewenvironment{consolethree}[1][]
+{
+  \lstset{
+    escapeinside={~|}{|~},
+    basicstyle=\ttfamily,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    xleftmargin=3.4pt,
+    xrightmargin=3.4pt,
+    belowskip=0pt,
+    numbers=none,
+    #1
+  }
+}
+{}
+
+\newcommand\includesourcethree[2][]{\lstinputlisting[frame=single,basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,xleftmargin=3.4pt,xrightmargin=3.4pt, #1]{#2}%
+    }
