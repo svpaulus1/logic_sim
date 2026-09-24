@@ -33,11 +33,31 @@ if(MSVC)
     target_compile_options(logicsim_core PUBLIC /W4)
 else()
     target_compile_options(logicsim_core PUBLIC -Wall -Wextra -Wpedantic)
+
     if(LOGICSIM_SANITIZE)
-        target_compile_options(logicsim_core PUBLIC
-            $<$<CONFIG:Debug>:-fsanitize=address,undefined -fno-omit-frame-pointer>)
-        target_link_options(logicsim_core PUBLIC
-            $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+        # The compiler accepting -fsanitize does not mean the runtime
+        # libraries (libasan / libubsan) are installed, so test-link first
+        # instead of failing at the final link step.
+        include(CheckCXXSourceCompiles)
+        set(CMAKE_REQUIRED_FLAGS "-fsanitize=address,undefined")
+        set(CMAKE_REQUIRED_LINK_OPTIONS "-fsanitize=address,undefined")
+        check_cxx_source_compiles("int main() { return 0; }" LOGICSIM_SANITIZERS_LINK)
+        unset(CMAKE_REQUIRED_FLAGS)
+        unset(CMAKE_REQUIRED_LINK_OPTIONS)
+
+        if(LOGICSIM_SANITIZERS_LINK)
+            target_compile_options(logicsim_core PUBLIC
+                $<$<CONFIG:Debug>:-fsanitize=address,undefined -fno-omit-frame-pointer>)
+            target_link_options(logicsim_core PUBLIC
+                $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+        elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+            message(WARNING
+                "Sanitizer runtime libraries not found; building Debug without "
+                "AddressSanitizer/UBSan. To enable them install the runtimes "
+                "(Fedora: sudo dnf install libasan libubsan; Debian/Ubuntu: "
+                "they ship with gcc) and re-run cmake with a fresh build dir "
+                "(make clean).")
+        endif()
     endif()
 endif()
 
