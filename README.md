@@ -23,7 +23,9 @@ make doxygen    # API reference PDF from the code comments: build/doxygen/logics
 
 `make doxygen` needs Doxygen and pdflatex (Fedora: `sudo dnf install doxygen
 doxygen-latex`). Ghostscript (`ghostscript`) adds class diagrams; without it
-the PDF is built without them. Settings are in `Doxyfile`.
+the PDF is built without them. Settings are in `Doxyfile`. If LaTeX stops
+on a missing package (`File 'x.sty' not found`), `make doxygen` prints it;
+on Fedora install it with `sudo dnf install 'tex(x.sty)'`.
 
 Or with CMake directly:
 
