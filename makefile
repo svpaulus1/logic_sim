@@ -1,4 +1,4 @@
-.PHONY: all config build run r test clean c
+.PHONY: all config build run r test t release clean c
 
 # Build type. Override on the command line: make run TYPE=Release
 #   Debug          -g            no optimization, asserts on, sanitizers on
@@ -25,8 +25,11 @@ run: build
 
 r: run
 
-test:
-	$(MAKE) run TYPE=Debug
+# Unit tests (Debug by default, so asserts and sanitizers are on).
+test: build
+	ctest --test-dir $(BUILD_DIR) --output-on-failure
+
+t: test
 
 release:
 	$(MAKE) run TYPE=Release
