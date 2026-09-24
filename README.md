@@ -17,8 +17,13 @@ make            # Debug build (asserts + AddressSanitizer/UBSan) in build/Debug
 make run        # build and run the demo (full adder table + 4-bit counter)
 make test       # build and run the unit tests
 make release    # optimised build and demo run
+make doxygen    # API reference PDF from the code comments: build/doxygen/logicsim.pdf
 ./build/Debug/logicsim wave.vcd   # demo, also writes a waveform for GTKWave
 ```
+
+`make doxygen` needs Doxygen and pdflatex (Fedora: `sudo dnf install doxygen
+doxygen-latex`). Ghostscript (`ghostscript`) adds class diagrams; without it
+the PDF is built without them. Settings are in `Doxyfile`.
 
 Or with CMake directly:
 

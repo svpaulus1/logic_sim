@@ -1,0 +1,48 @@
+# Doxyfile -- API reference for logicsim, built by `make doxygen`.
+#
+# Only settings that differ from Doxygen's defaults are listed; run
+# `doxygen -g full.cfg` to see every option with its documentation.
+
+PROJECT_NAME           = "logicsim"
+PROJECT_BRIEF          = "Event-driven 4-state digital logic simulator"
+
+# Paths are relative to the repository root, where make runs doxygen.
+OUTPUT_DIRECTORY       = build/doxygen
+STRIP_FROM_PATH        = .
+
+# --- What to read ----------------------------------------------------------
+
+INPUT                  = README.md include src
+FILE_PATTERNS          = *.h *.cpp
+USE_MDFILE_AS_MAINPAGE = README.md
+
+# Document everything, including private members, file-local helpers and
+# members that have no comment yet, so the PDF covers all of the code.
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_ANON_NSPACES   = YES
+
+# --- Warnings --------------------------------------------------------------
+
+QUIET                  = YES
+# EXTRACT_ALL already covers undocumented members; listing each one (and
+# every function whose parameters lack @param) is noise. Set both to YES to
+# get a to-do list of missing comments.
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_INCOMPLETE_DOC = NO
+
+# --- Output: PDF via LaTeX only ----------------------------------------------
+
+GENERATE_HTML          = NO
+GENERATE_LATEX         = YES
+USE_PDFLATEX           = YES
+PDF_HYPERLINKS         = YES
+PAPER_TYPE             = letter
+# Never stop at an interactive LaTeX prompt; errors end up in refman.log.
+LATEX_BATCHMODE        = YES
+
+# Class diagrams with Doxygen's built-in renderer (needs Ghostscript to turn
+# them into PDF; `make doxygen` drops them if gs is missing). Set
+# HAVE_DOT = YES if Graphviz is installed for nicer graphs.
+HAVE_DOT               = NO
