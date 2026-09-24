@@ -21,9 +21,23 @@ make doxygen    # API reference PDF from the code comments: build/doxygen/logics
 ./build/Debug/logicsim wave.vcd   # demo, also writes a waveform for GTKWave
 ```
 
-`make doxygen` needs Doxygen and pdflatex (Fedora: `sudo dnf install doxygen
-doxygen-latex`). Ghostscript (`ghostscript`) adds class diagrams; without it
-the PDF is built without them. Settings are in `Doxyfile`.
+`make doxygen` needs Doxygen, pdflatex and the ~40 LaTeX packages Doxygen's
+output uses. Installing the TeX Live collections that hold them avoids
+chasing missing `.sty` files one at a time:
+
+```sh
+# Fedora
+sudo dnf install doxygen ghostscript texlive-collection-latexrecommended \
+    texlive-collection-latexextra texlive-collection-fontsrecommended \
+    texlive-collection-plaingeneric
+# Debian / Ubuntu
+sudo apt install doxygen ghostscript texlive-latex-recommended \
+    texlive-latex-extra texlive-fonts-recommended texlive-plain-generic
+```
+
+Ghostscript adds class diagrams; without it the PDF is built without them. Settings are in `Doxyfile`. If LaTeX stops
+on a missing package (`File 'x.sty' not found`), `make doxygen` prints it;
+on Fedora install it with `sudo dnf install 'tex(x.sty)'`.
 
 Or with CMake directly:
 

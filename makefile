@@ -49,8 +49,17 @@ doxygen:
 		echo "Ghostscript (gs) not found: leaving out class diagrams (Fedora: sudo dnf install ghostscript)"; \
 		{ cat Doxyfile; echo "CLASS_GRAPH = NO"; } | doxygen -; fi
 	@echo "Running LaTeX (log: $(DOXY_DIR)/latex.log)"
-	@$(MAKE) -C $(DOXY_DIR)/latex > $(DOXY_DIR)/latex.log 2>&1 || \
-		{ tail -n 30 $(DOXY_DIR)/latex.log; echo "LaTeX failed, see $(DOXY_DIR)/latex/refman.log"; exit 1; }
+	@$(MAKE) -C $(DOXY_DIR)/latex > $(DOXY_DIR)/latex.log 2>&1 || { \
+		log=$(DOXY_DIR)/latex/refman.log; \
+		echo "LaTeX failed. First error in $$log:"; \
+		grep -m1 -A3 '^!' $$log; \
+		missing=$$(grep -m1 'LaTeX Error: File' $$log | grep -oE '[A-Za-z0-9_.-]+[.](sty|cls|def|cfg|fd)' | head -n1); \
+		if [ -n "$$missing" ]; then \
+			echo "A LaTeX package is missing. Install the one providing $$missing:"; \
+			echo "  Fedora:        sudo dnf install 'tex($$missing)'"; \
+			echo "  Debian/Ubuntu: sudo apt install texlive-latex-extra texlive-plain-generic"; \
+		fi; \
+		exit 1; }
 	cp $(DOXY_DIR)/latex/refman.pdf $(DOXY_PDF)
 	@echo "PDF written to $(DOXY_PDF)"
 
