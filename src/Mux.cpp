@@ -1,4 +1,9 @@
-// File: Mux.cpp
+/**
+ * @file Mux.cpp
+ * @author Sebastian Paulus
+ * @date 2026/11/15
+ * @brief Implementation of Mux (see Mux.h).
+ */
 
 #include "Mux.h"
 #include <stdexcept>
@@ -6,6 +11,12 @@
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)
@@ -16,6 +27,10 @@ namespace
         return pins;
     }
 
+    /// @brief Validates the number of data inputs.
+    /// @param width The value given.
+    /// @return @p width, unchanged.
+    /// @throws std::invalid_argument if @p width is less than 2.
     std::size_t checkedWidth(std::size_t width)
     {
         if (width < 2)
@@ -23,6 +38,10 @@ namespace
         return width;
     }
 
+    /// @brief Validates the bits per data input.
+    /// @param bit_width The value given.
+    /// @return @p bit_width, unchanged.
+    /// @throws std::invalid_argument if @p bit_width is 0.
     std::size_t checkedBitWidth(std::size_t bit_width)
     {
         if (bit_width == 0)
@@ -30,6 +49,9 @@ namespace
         return bit_width;
     }
 
+    /// @brief Select bits needed to pick one of @p n inputs.
+    /// @param n Number of data inputs.
+    /// @return The smallest k with 2^k >= @p n.
     std::size_t selectBitsFor(std::size_t n)
     {
         std::size_t k = 0;

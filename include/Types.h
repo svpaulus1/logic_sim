@@ -113,26 +113,39 @@ inline LogicValue operator~(LogicValue a)
 
 // --- Helpers -------------------------------------------------------------
 
-/// True for LOW or HIGH.
+/**
+ * @brief Tells whether a value is a definite logic level.
+ * @param v The value to test.
+ * @return true for LOW or HIGH, false for UNKNOWN or HIGHZ.
+ */
 constexpr bool isKnown(LogicValue v)
 {
     return v == LogicValue::LOW || v == LogicValue::HIGH;
 }
 
-/// Converts a boolean to LOW / HIGH.
+/**
+ * @brief Converts a boolean to a logic level.
+ * @param b The boolean.
+ * @return HIGH for true, LOW for false.
+ */
 constexpr LogicValue toLogic(bool b)
 {
     return b ? LogicValue::HIGH : LogicValue::LOW;
 }
 
-/// The printable character for @p v: '0', '1', 'X' or 'Z'.
+/**
+ * @brief The printable character for a logic value, as used in VCD output.
+ * @param v The value.
+ * @return '0', '1', 'X' or 'Z'.
+ */
 constexpr char toChar(LogicValue v)
 {
     return static_cast<char>(v);
 }
 
 /**
- * @brief Parses '0', '1', 'x'/'X' or 'z'/'Z'.
+ * @brief Parses a logic value from its character.
+ * @param c '0', '1', 'x' / 'X' or 'z' / 'Z'.
  * @return The value, or std::nullopt for any other character.
  */
 constexpr std::optional<LogicValue> logicFromChar(char c)
@@ -152,6 +165,9 @@ constexpr std::optional<LogicValue> logicFromChar(char c)
  *
  * Gates never pass HIGHZ through a logic function; only a driver that is
  * deliberately released (bufif/notif) puts Z on its output.
+ *
+ * @param v The value on the net.
+ * @return UNKNOWN for HIGHZ, otherwise @p v unchanged.
  */
 constexpr LogicValue asInput(LogicValue v)
 {

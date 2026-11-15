@@ -1,4 +1,9 @@
-// File: Gate.cpp
+/**
+ * @file Gate.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/13
+ * @brief Implementation of Gate (see Gate.h).
+ */
 
 #include "Gate.h"
 #include <algorithm>

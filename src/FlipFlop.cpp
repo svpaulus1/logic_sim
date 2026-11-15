@@ -1,9 +1,21 @@
-// File: FlipFlop.cpp
+/**
+ * @file FlipFlop.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of FlipFlop (see FlipFlop.h).
+ */
+
 #include "FlipFlop.h"
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)
@@ -14,7 +26,11 @@ namespace
         return pins;
     }
 
-    /// Combines a possible-but-uncertain change with the current state.
+    /// @brief Combines a possible-but-uncertain change with the current
+    ///        state.
+    /// @param current The stored value.
+    /// @param next    The value it would change to.
+    /// @return @p current if the two agree, otherwise UNKNOWN.
     LogicValue maybe(LogicValue current, LogicValue next)
     {
         return next == current ? current : LogicValue::UNKNOWN;

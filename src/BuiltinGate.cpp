@@ -1,13 +1,38 @@
+/**
+ * @file BuiltinGate.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of BuiltinGate (see BuiltinGate.h).
+ */
+
 #include "BuiltinGate.h"
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Fold step of AND and NAND.
+    /// @param a First value.
+    /// @param b Second value.
+    /// @return a & b.
     LogicValue fAnd(LogicValue a, LogicValue b) { return a & b; }
+    /// @brief Fold step of OR and NOR.
+    /// @param a First value.
+    /// @param b Second value.
+    /// @return a | b.
     LogicValue fOr (LogicValue a, LogicValue b) { return a | b; }
+    /// @brief Fold step of XOR and XNOR.
+    /// @param a First value.
+    /// @param b Second value.
+    /// @return a ^ b.
     LogicValue fXor(LogicValue a, LogicValue b) { return a ^ b; }
+    /// @brief Fold step of BUF and NOT, which have one input.
+    /// @param a The input value.
+    /// @return @p a.
     LogicValue fId(LogicValue a, LogicValue) { return a; }
 
+    /// @brief Row of @p t in the info table.
+    /// @param t The gate type.
+    /// @return Its index.
     std::size_t index(BuiltinGate::Type t) { return static_cast<std::size_t>(t); }
 } // namespace
 

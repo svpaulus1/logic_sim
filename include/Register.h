@@ -61,7 +61,11 @@ class Register : public Gate
 {
 public:
     /// Which clock edge loads the register.
-    enum class Edge { Rising, Falling };
+    enum class Edge
+    {
+        Rising, ///< LOW to HIGH.
+        Falling ///< HIGH to LOW.
+    };
 
     /**
      * @brief Builds the register and wires it into the netlist.

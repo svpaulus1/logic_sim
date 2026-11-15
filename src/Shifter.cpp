@@ -1,9 +1,21 @@
-// File: Shifter.cpp
+/**
+ * @file Shifter.cpp
+ * @author Sebastian Paulus
+ * @date 2026/11/15
+ * @brief Implementation of Shifter (see Shifter.h).
+ */
+
 #include "Shifter.h"
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)
@@ -14,6 +26,10 @@ namespace
         return pins;
     }
 
+    /// @brief Validates the width of the value.
+    /// @param size The value given.
+    /// @return @p size, unchanged.
+    /// @throws std::invalid_argument if @p size is less than 2.
     std::size_t checkedSize(std::size_t size)
     {
         if (size < 2)
@@ -21,7 +37,9 @@ namespace
         return size;
     }
 
-    /// Smallest k with 2^k >= n.
+    /// @brief Shift-amount bits needed for a @p n bit value.
+    /// @param n Bits in the value.
+    /// @return The smallest k with 2^k >= @p n.
     std::size_t shiftBitsFor(std::size_t n)
     {
         std::size_t k = 0;

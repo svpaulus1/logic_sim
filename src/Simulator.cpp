@@ -1,4 +1,10 @@
-// File: Simulator.cpp
+/**
+ * @file Simulator.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of Simulator (see Simulator.h).
+ */
+
 #include "Simulator.h"
 #include <algorithm>
 #include <limits>
@@ -7,6 +13,8 @@
 
 namespace
 {
+    /// Deepest module nesting instantiate() accepts; catches a module
+    /// that contains itself.
     constexpr unsigned kMaxModuleDepth = 64;
 } // namespace
 

@@ -1,4 +1,10 @@
-// File: Net.cpp
+/**
+ * @file Net.cpp
+ * @author Sebastian Paulus
+ * @date 2026/06/16
+ * @brief Implementation of Net (see Net.h).
+ */
+
 #include "Net.h"
 #include <algorithm>
 #include "Gate.h"

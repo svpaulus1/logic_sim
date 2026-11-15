@@ -1,10 +1,8 @@
-// File: Event.h
-
 /**
  * @file Event.h
  * @author Sebastian Paulus
  * @date 2026/09/24
- * @brief Struct for a logic event.
+ * @brief A scheduled change of one gate output, as stored in the EventQueue.
  */
 
 #ifndef EVENT_H
@@ -17,15 +15,24 @@ class Gate;
 
 /**
  * @struct Event
- * @brief Encapsulates a scheduled state change in the event simulation.
+ * @brief A scheduled change of one gate output.
  *
- *        Current size of struct = 16 bytes.
+ * The EventQueue files each event under the time and Region it fires in; the
+ * time itself is not stored here. When the event fires, the queue calls
+ * Gate::commit(), which drops it if the gate has scheduled something newer
+ * for that output since (the serials no longer match). That is how inertial
+ * delay swallows short pulses.
+ *
+ * Kept small (16 bytes on 64-bit platforms) because the queue holds many.
  */
 struct Event
 {
-    Gate* gate = nullptr;
-    uint16_t out_index = 0;
-    LogicValue value = LogicValue::UNKNOWN;
+    Gate* gate = nullptr;                   ///< Gate whose output changes.
+    uint16_t out_index = 0;                 ///< Which output of @c gate.
+    LogicValue value = LogicValue::UNKNOWN; ///< Value the output takes.
+
+    /// Must match the gate's pending serial for this output, or the event is
+    /// stale and gets dropped.
     uint32_t serial = 0;
 };
 

@@ -1,9 +1,21 @@
-// File: Adder.cpp
+/**
+ * @file Adder.cpp
+ * @author Sebastian Paulus
+ * @date 2026/11/07
+ * @brief Implementation of Adder (see Adder.h).
+ */
+
 #include "Adder.h"
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)
@@ -14,6 +26,10 @@ namespace
         return pins;
     }
 
+    /// @brief Validates the operand size.
+    /// @param size The value given.
+    /// @return @p size, unchanged.
+    /// @throws std::invalid_argument if @p size is 0.
     std::size_t checkedSize(std::size_t size)
     {
         if (size == 0)

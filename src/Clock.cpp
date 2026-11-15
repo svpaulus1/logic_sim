@@ -1,4 +1,10 @@
-// File: Clock.cpp
+/**
+ * @file Clock.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of Clock (see Clock.h).
+ */
+
 #include "Clock.h"
 #include <stdexcept>
 
