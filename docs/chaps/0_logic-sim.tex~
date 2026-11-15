@@ -1,0 +1,6 @@
+\newsection{Logic Simulator \texttt{(C++)}}
+
+\begin{itemize}
+\item Accurately simulates complex circuits commingling and executing
+\item Allows for custom circuits to be executed from simpler gates
+\end{itemize}

@@ -19,6 +19,7 @@
 #include <queue>
 
 #include "Component.h"
+#include "NandGate.h"
 #include "Net.h"
 #include "Event.h"
 #include "Types.h"
@@ -44,6 +45,7 @@ private:
     EventQueue event_queue_;
 
     uint64_t time_ = 0; ///< Current time of the simulation.
+    uint64_t id_counter_ = 0; ///< ID generator for components.
 
 public:
     /** @brief Default constructor. Initializes an empty circuit. */
@@ -52,10 +54,37 @@ public:
     /** @brief Default destructor. Safely deletes all components and nets. */
     ~Circuit() = default;
 
-    // Note: Future methods to be implemented in Circuit.cpp
+    /** @brief Creates a Net and returns a raw observer pointer. */
+    Net* createNet(LogicValue initial_value = LogicValue::UNKNOWN)
+    {
+        auto net = std::make_unique<Net>(++id_counter_,
+                                         initial_value,
+                                         nullptr,
+                                         std::vector<Component*>{});
+        Net* ptr = net.get();
+        all_nets_.push_back(std::move(net));
+        return ptr;
+    }
+
+    /** @brief Creates a NandGate and returns a raw observer pointer. */
+    NandGate* createNandGate(const std::string& name, uint64_t delay)
+    {
+        auto gate = std::make_unique<NandGate>(++id_counter_, name, delay);
+        NandGate* ptr = gate.get();
+        all_components_.push_back(std::move(gate));
+        return ptr;
+    }
+
+
+    /** @brief Injects an initial event to kickstart the simulation. */
+    void scheduleEvent(uint64_t time, Net* target, LogicValue value)
+    {
+        event_queue_.push(Event(time, target, value));
+    }
+
     
-    // void scheduleEvent(uint64_t time, Net* target, LogicValue value);
-    // void runSimulation();
+    /** @brief Runs the simulation until the event queue is completely empty. */
+    void run();
 };
 
 #endif

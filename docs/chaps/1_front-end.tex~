@@ -1,0 +1,10 @@
+\newsection{Front-end \texttt{(Python, Django, POSTgres, C++)}}
+
+\begin{itemize}
+\item API layer between the logic simulator and the GUI
+\item performs login verification
+\item accepts circuit DB querying (POST / GET / UPDATE)
+\item performs client app / server app health checks
+\end{itemize}
+
+  
