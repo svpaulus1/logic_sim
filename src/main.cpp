@@ -1,8 +1,15 @@
-// File: main.cpp
-// Demo: a full adder built from a Module, then a clocked 4-bit counter.
-//
-//   logicsim              print both demos
-//   logicsim wave.vcd     also dump the counter's waveform for GTKWave
+/**
+ * @file main.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Demo: a full adder built from a Module, then a clocked 4-bit
+ *        counter.
+ *
+ * @code
+ *   logicsim              print both demos
+ *   logicsim wave.vcd     also dump the counter's waveform for GTKWave
+ * @endcode
+ */
 
 #include <fstream>
 #include <iostream>

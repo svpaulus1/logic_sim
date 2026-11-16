@@ -1,4 +1,10 @@
-// File: Module.cpp
+/**
+ * @file Module.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of Module (see Module.h).
+ */
+
 #include "Module.h"
 #include <algorithm>
 #include <stdexcept>

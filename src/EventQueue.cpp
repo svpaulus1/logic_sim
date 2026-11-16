@@ -1,4 +1,9 @@
-// File: EventQueue.cpp
+/**
+ * @file EventQueue.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/13
+ * @brief Implementation of EventQueue (see EventQueue.h).
+ */
 
 #include "EventQueue.h"
 #include <algorithm>

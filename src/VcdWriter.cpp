@@ -1,4 +1,10 @@
-// File: VcdWriter.cpp
+/**
+ * @file VcdWriter.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of VcdWriter (see VcdWriter.h).
+ */
+
 #include "VcdWriter.h"
 #include <cctype>
 #include <map>
@@ -9,11 +15,15 @@ namespace
     /// Scope tree built from dotted names.
     struct Scope
     {
-        std::map<std::string, Scope> children;
-        std::vector<std::pair<std::string, std::string>> vars; ///< (code, name)
+        std::map<std::string, Scope> children; ///< Nested scopes, by name.
+        /// (code, name) of every signal directly in this scope.
+        std::vector<std::pair<std::string, std::string>> vars;
     };
 
-    /// VCD names cannot contain whitespace.
+    /// @brief Makes a legal VCD name: VCD names cannot contain whitespace.
+    /// @param s The net or scope name.
+    /// @return @p s with each whitespace character replaced by '_', or
+    ///         "_" if @p s is empty.
     std::string sanitize(std::string s)
     {
         if (s.empty()) return "_";
@@ -22,6 +32,10 @@ namespace
         return s;
     }
 
+    /// @brief Writes the $var lines of @p scope, then each child scope,
+    ///        recursively.
+    /// @param out   Destination stream.
+    /// @param scope The scope to write.
     void emit(std::ostream& out, const Scope& scope)
     {
         for (const auto& v : scope.vars)

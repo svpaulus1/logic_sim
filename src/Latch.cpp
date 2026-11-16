@@ -1,9 +1,21 @@
-// File: Latch.cpp
+/**
+ * @file Latch.cpp
+ * @author Sebastian Paulus
+ * @date 2026/09/24
+ * @brief Implementation of Latch (see Latch.h).
+ */
+
 #include "Latch.h"
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)

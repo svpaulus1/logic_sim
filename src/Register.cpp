@@ -1,10 +1,22 @@
-// File: Register.cpp
+/**
+ * @file Register.cpp
+ * @author Sebastian Paulus
+ * @date 2026/11/15
+ * @brief Implementation of Register (see Register.h).
+ */
+
 #include "Register.h"
 #include <algorithm>
 #include <stdexcept>
 
 namespace
 {
+    /// @brief Pads @p pins with unconnected (nullptr) pins up to @p n.
+    /// @param pins The pins given.
+    /// @param n    Pins in the full layout.
+    /// @param what "inputs" or "outputs", for the error message.
+    /// @return @p pins, resized to @p n.
+    /// @throws std::invalid_argument if more than @p n pins were given.
     std::vector<Net*> padded(std::vector<Net*> pins,
                              std::size_t n,
                              const char* what)
@@ -15,6 +27,10 @@ namespace
         return pins;
     }
 
+    /// @brief Validates the number of bits stored.
+    /// @param size The value given.
+    /// @return @p size, unchanged.
+    /// @throws std::invalid_argument if @p size is 0.
     std::size_t checkedSize(std::size_t size)
     {
         if (size == 0)
@@ -22,7 +38,11 @@ namespace
         return size;
     }
 
-    /// Combines a possible-but-uncertain change with the current value.
+    /// @brief Combines a possible-but-uncertain change with the current
+    ///        value.
+    /// @param current The stored value.
+    /// @param next    The value it would change to.
+    /// @return @p current if the two agree, otherwise UNKNOWN.
     LogicValue maybe(LogicValue current, LogicValue next)
     {
         return next == current ? current : LogicValue::UNKNOWN;
